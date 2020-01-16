@@ -31,13 +31,14 @@ body {
   left: 0;
 }
 
-.dashboard img.btn-play {
+.dashboard img.btn-start {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translate(-50%, 0);
   height: 100%;
   cursor: pointer;
+  z-index: 999;
 }
 
 .slide-out {
@@ -56,13 +57,9 @@ body {
 .countdown {
   font-size: 4rem;
   opacity: 0;
-
   transform: translateY(-100%);
-}
-.slide-in {
   animation: slide-in 0.5s ease forwards;
 }
-
 @keyframes slide-in {
   0% {
   }
