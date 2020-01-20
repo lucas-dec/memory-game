@@ -4,12 +4,39 @@ let partyIndexInterval, timerIndexInterval, sec, min, firstCard, secondCard;
 let countGuessedPair = 0;
 let enableChoice = true;
 
-function restartGame() {
+function playAgine() {
+  const modal = document.querySelector(".finish-modal");
+  const modalBox = document.querySelector(".modal-container");
+
+  modal.classList.remove("show");
+  modalBox.classList.remove("show");
   [...cardsContainer.children].forEach(card => card.remove());
   countGuessedPair = 0;
   enableChoice = true;
   firstCard = null;
   secondCard = null;
+  sec = null;
+  min = null;
+  btnStart.remove();
+  const contentGame = document.querySelector(".content-game");
+  [...contentGame.children].forEach(el => el.remove());
+  contentGame.classList.add("hidden");
+  startPlay();
+}
+
+function restartGame() {
+  const modal = document.querySelector(".finish-modal");
+  const modalBox = document.querySelector(".modal-container");
+
+  modal.classList.remove("show");
+  modalBox.classList.remove("show");
+  [...cardsContainer.children].forEach(card => card.remove());
+  countGuessedPair = 0;
+  enableChoice = true;
+  firstCard = null;
+  secondCard = null;
+  sec = null;
+  min = null;
   btnStart.remove();
   const contentGame = document.querySelector(".content-game");
   [...contentGame.children].forEach(el => el.remove());
@@ -27,15 +54,19 @@ function restartGame() {
 
 function finishGame() {
   clearInterval(timerIndexInterval);
-  const contentGame = document.querySelector(".content-game");
-  [...contentGame.children].forEach(el => el.remove());
-  const finishWrapper = document.getElementById("template-finishWrapper");
-  const finishContent = document.importNode(finishWrapper.content, true);
-  const score = finishContent.querySelector(".score");
-  score.innerHTML = `<h3>Score: 6/6</h3><h3>Time: ${min}:${sec}</h3>`;
-  const restartBtn = finishContent.querySelector(".btn-restart");
-  contentGame.appendChild(finishContent);
-  restartBtn.addEventListener("click", restartGame);
+  const modal = document.querySelector(".finish-modal");
+  const modalBox = document.querySelector(".modal-container");
+  const score = modal.querySelector(".score span");
+  const time = modal.querySelector(".time span");
+  score.innerText = countGuessedPair;
+  time.innerText = `${min}:${sec}`;
+  modal.classList.add("show");
+  modalBox.classList.add("show");
+
+  const closeBtn = document.querySelector(".btn-close");
+  closeBtn.addEventListener("click", restartGame);
+  const restartBtn = document.querySelector(".btn-restart");
+  restartBtn.addEventListener("click", playAgine);
 }
 
 function updateResult() {
@@ -173,7 +204,7 @@ function countdown() {
 }
 
 function startPlay(e) {
-  e.target.classList.add("slide-out");
+  if (e) e.target.classList.add("slide-out");
 
   clearInterval(partyIndexInterval);
   [...cardsContainer.children].forEach(card => (card.style.display = "none"));

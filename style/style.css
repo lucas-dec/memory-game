@@ -100,27 +100,6 @@ body {
   opacity: 0 !important;
 }
 
-.finishWrapper {
-  width: 80%;
-  height: 100%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.content-finish {
-  display: flex;
-  width: 80%;
-  height: 100%;
-  align-items: center;
-  justify-content: space-between;
-}
-img.btn-restart {
-  width: 20%;
-  cursor: pointer;
-}
-
 .cards {
   display: flex;
   flex-direction: row;
@@ -188,25 +167,99 @@ img.btn-restart {
   background-color: rgba(231, 251, 203, 0.7);
 }
 
+.finish-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(231, 251, 203, 0.7);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: scale(0);
+  transition: 0s all ease-in;
+}
+
+.finish-modal.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.modal-container {
+  background-color: #92d13d;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  border-radius: 0 0 20px 20px;
+  transform: scale(0);
+  opacity: 0;
+  transition: 1s all ease-in;
+}
+.modal-container.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.modal-container .header {
+  width: 100%;
+  color: white;
+  padding: 1em;
+  background-color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-container .header .btn-close {
+  position: absolute;
+  right: 5%;
+  margin: auto;
+  width: 8%;
+  cursor: pointer;
+}
+.modal-container .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 3vh;
+}
+.modal-container .info {
+  display: flex;
+  margin: 3vh 0;
+
+  width: 100%;
+  justify-content: space-around;
+}
+.modal-container .info img {
+  width: 10%;
+  margin: 0.5em;
+  cursor: pointer;
+}
+
+.path-rear,
+.path-front {
+  display: none;
+}
+
 @media (min-width: 568px) {
   .container-game {
     width: 90%;
   }
+  .modal-container {
+    width: 70%;
+  }
+  .modal-container .header .btn-close {
+    width: 5%;
+  }
   .result h1 {
     font-size: 3rem;
-  }
-  .finishWrapper {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-  }
-
-  .content-finish {
-    width: 50%;
-  }
-  img.btn-restart {
-    width: 15%;
   }
 
   .cardBox {
@@ -227,9 +280,14 @@ img.btn-restart {
   }
   .container-game {
     position: absolute;
-    z-index: 999;
+    z-index: 998;
   }
-  .path-rear {
+  .modal-container {
+    width: 60%;
+  }
+  .path-rear,
+  .path-front {
+    display: block;
     position: absolute;
     width: 100%;
     bottom: 0;
@@ -237,10 +295,6 @@ img.btn-restart {
     z-index: 1;
   }
   .path-front {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    left: 0;
     z-index: 2;
   }
   .container-game {
@@ -260,21 +314,13 @@ img.btn-restart {
     width: 60%;
     height: 90%;
   }
+  .modal-container {
+    width: 40%;
+  }
   .result h1 {
     font-size: 5rem;
   }
-  .finishWrapper {
-    width: 80%;
-    height: 80%;
-    flex-direction: column;
-  }
 
-  .content-finish {
-    width: 70%;
-  }
-  img.btn-restart {
-    width: 10%;
-  }
   .cards {
     height: 70%;
   }
