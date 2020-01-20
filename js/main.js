@@ -4,10 +4,7 @@ let partyIndexInterval, timerIndexInterval, sec, min, firstCard, secondCard;
 let countGuessedPair = 0;
 let enableChoice = true;
 
-function playAgine() {
-  const modal = document.querySelector(".finish-modal");
-  const modalBox = document.querySelector(".modal-container");
-
+function clearContent(modal, modalBox) {
   modal.classList.remove("show");
   modalBox.classList.remove("show");
   [...cardsContainer.children].forEach(card => card.remove());
@@ -21,28 +18,15 @@ function playAgine() {
   const contentGame = document.querySelector(".content-game");
   [...contentGame.children].forEach(el => el.remove());
   contentGame.classList.add("hidden");
+}
+function playAgine(modal, modalBox) {
+  clearContent(modal, modalBox);
   startPlay();
 }
 
-function restartGame() {
-  const modal = document.querySelector(".finish-modal");
-  const modalBox = document.querySelector(".modal-container");
-
-  modal.classList.remove("show");
-  modalBox.classList.remove("show");
-  [...cardsContainer.children].forEach(card => card.remove());
-  countGuessedPair = 0;
-  enableChoice = true;
-  firstCard = null;
-  secondCard = null;
-  sec = null;
-  min = null;
-  btnStart.remove();
-  const contentGame = document.querySelector(".content-game");
-  [...contentGame.children].forEach(el => el.remove());
-  contentGame.classList.add("hidden");
+function restartGame(modal, modalBox) {
+  clearContent(modal, modalBox);
   party();
-
   const dashboard = document.querySelector(".dashboard");
   btnStart = document.createElement("img");
   btnStart.src = "./images/btn-play.png";
@@ -64,9 +48,9 @@ function finishGame() {
   modalBox.classList.add("show");
 
   const closeBtn = document.querySelector(".btn-close");
-  closeBtn.addEventListener("click", restartGame);
+  closeBtn.addEventListener("click", () => restartGame(modal, modalBox));
   const restartBtn = document.querySelector(".btn-restart");
-  restartBtn.addEventListener("click", playAgine);
+  restartBtn.addEventListener("click", () => playAgine(modal, modalBox));
 }
 
 function updateResult() {
@@ -240,7 +224,7 @@ function party() {
 function generateCards(info) {
   const numbersCards = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6];
   for (let i = 1; i <= 12; i++) {
-    let indexCard = Math.floor(Math.random() * (numbersCards.length - 1));
+    let indexCard = Math.floor(Math.random() * numbersCards.length);
     let number = numbersCards[indexCard];
     numbersCards.splice(indexCard, 1);
 
