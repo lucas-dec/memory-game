@@ -15,7 +15,7 @@ body {
   height: 100vh;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
   margin: auto;
 }
 
@@ -49,6 +49,7 @@ body {
   0% {
   }
   100% {
+    visibility: hidden;
     opacity: 0;
     transform: translate(-50%, 100%);
   }
@@ -58,7 +59,7 @@ body {
   font-size: 4rem;
   opacity: 0;
   transform: translateY(-100%);
-  animation: slide-in 0.5s ease forwards;
+  animation: slide-in 0.8s ease;
 }
 @keyframes slide-in {
   0% {
@@ -75,6 +76,7 @@ body {
   left: 0;
   display: flex;
   width: 100%;
+  height: 100%;
   justify-content: flex-end;
   align-items: center;
   opacity: 1;
@@ -89,7 +91,7 @@ body {
   font-size: 5rem;
 }
 
-.time {
+.timer {
   width: 25%;
   align-self: flex-end;
 }
@@ -97,58 +99,183 @@ body {
 .hidden {
   opacity: 0 !important;
 }
+
+.finishWrapper {
+  width: 80%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content-finish {
+  display: flex;
+  width: 80%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+img.btn-restart {
+  width: 20%;
+  cursor: pointer;
+}
+
 .cards {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  height: 82vh;
+  height: 75vh;
 }
 
-.cards img {
-  padding: 2px;
+.cardBox {
   width: 30%;
+  margin: 1px;
   height: calc(100% / 4);
+  background-color: transparent;
+  border: 1px solid #f1f1f1;
+  perspective: 1000px;
+}
+
+.cardBox-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+.cardBox-inner.visible {
+  transform: rotateY(180deg);
+}
+
+.card-invisible {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background-color: rgb(231, 251, 203);
+}
+
+.card-visible {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+.card-visible img {
+  padding: 2px;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.card-visible.guessed {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.card-visible.guessed::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(231, 251, 203, 0.7);
 }
 
 @media (min-width: 568px) {
+  .container-game {
+    width: 90%;
+  }
   .result h1 {
     font-size: 3rem;
   }
-  .cards img {
-    width: 25%;
+  .finishWrapper {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .content-finish {
+    width: 50%;
+  }
+  img.btn-restart {
+    width: 15%;
+  }
+
+  .cardBox {
+    width: 24%;
+    height: calc(100% / 3);
+  }
+  .invisible {
+    width: 24%;
     height: calc(100% / 3);
   }
 }
 
 @media (min-width: 768px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .container-game {
+    position: absolute;
+    z-index: 999;
+  }
+  .path-rear {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+  }
+  .path-front {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+  }
   .container-game {
     width: 80%;
   }
   .result h1 {
     font-size: 4rem;
   }
+
   .cards {
     height: 60%;
-  }
-  .cards img {
-    width: 25%;
-    height: calc(100% / 3);
   }
 }
 @media (min-width: 1280px) {
   .container-game {
+    position: absolute;
     width: 60%;
     height: 90%;
   }
   .result h1 {
     font-size: 5rem;
   }
+  .finishWrapper {
+    width: 80%;
+    height: 80%;
+    flex-direction: column;
+  }
+
+  .content-finish {
+    width: 70%;
+  }
+  img.btn-restart {
+    width: 10%;
+  }
   .cards {
     height: 70%;
-  }
-  .cards img {
-    padding: 5px;
   }
 }
